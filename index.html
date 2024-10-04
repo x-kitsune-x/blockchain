@@ -1,0 +1,437 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Licores</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(62, 128, 189, 0.1);
+            display: none;
+            /* Ocultar por defecto */
+            padding: 20px;
+        }
+
+        .header-title {
+            color: #710c69;
+            font-size: 2.5rem;
+        }
+
+        .header-subtitle {
+            color: #4b93d2;
+            font-size: 1.2rem;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            /* Espacio entre las opciones */
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            background-color: #710c69;
+            /* Color de fondo de las opciones */
+            color: white;
+            /* Color del texto */
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 150px;
+            /* Ancho de cada opción */
+            text-align: center;
+            /* Centrar texto */
+        }
+
+        .menu-item:hover {
+            background-color: #4b93d2;
+            /* Color de fondo al pasar el mouse */
+        }
+
+        .menu-title {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .info-container {
+            margin-top: 20px;
+            /* Espacio entre formulario y la información mostrada */
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1 class="font-weight-bold">Registro Seguro de Licores</h1>
+            <p class="text-muted">Valida tus licores de manera sencilla y segura</p>
+        </div>
+
+        <!-- Menú de opciones -->
+        <div class="menu-container">
+            <div class="menu-item" onclick="showForm('licoreraForm')">Licorera</div>
+            <div class="menu-item" onclick="showForm('distribuidorForm')">Distribuidor</div>
+            <div class="menu-item" onclick="showForm('comercianteForm')">Comerciante</div>
+            <div class="menu-item" onclick="showForm('clienteForm')">Cliente</div>
+        </div>
+
+        <!-- Formulario para Licorera -->
+        <div id="licoreraForm" class="form-container shadow-lg p-4 rounded bg-white">
+            <h3 class="text-center">Registrar Licorera</h3>
+            <div class="form-group">
+                <label for="licoreraName">Nombre de la Licorera:</label>
+                <input type="text" id="licoreraName" class="form-control" placeholder="Nombre de la licorera" required>
+            </div>
+            <div class="form-group">
+                <label for="licoreraIndex">Índice:</label>
+                <input type="number" id="licoreraIndex" class="form-control" placeholder="Introduce el índice" required>
+            </div>
+            <div class="form-group">
+                <label for="licoreraDate">Fecha:</label>
+                <input type="date" id="licoreraDate" class="form-control" required>
+            </div>
+            <button id="licoreraAddBtn" class="btn btn-primary">Agregar a Blockchain</button>
+        </div>
+
+        <!-- Formulario para Distribuidor -->
+        <div id="distribuidorForm" class="form-container shadow-lg p-4 rounded bg-white">
+            <h3 class="text-center">Registrar Distribuidor</h3>
+            <div class="form-group">
+                <label for="distribuidorName">Nombre del Distribuidor:</label>
+                <input type="text" id="distribuidorName" class="form-control" placeholder="Nombre del distribuidor"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="distribuidorIndex">Índice:</label>
+                <input type="number" id="distribuidorIndex" class="form-control" placeholder="Introduce el índice"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="distribuidorDate">Fecha:</label>
+                <input type="date" id="distribuidorDate" class="form-control" required>
+            </div>
+            <button id="distribuidorAddBtn" class="btn btn-primary">Agregar a Blockchain</button>
+        </div>
+
+        <!-- Formulario para Comerciante -->
+        <div id="comercianteForm" class="form-container shadow-lg p-4 rounded bg-white">
+            <h3 class="text-center">Registrar Comerciante</h3>
+            <div class="form-group">
+                <label for="comercianteName">Nombre del Comerciante:</label>
+                <input type="text" id="comercianteName" class="form-control" placeholder="Nombre del comerciante"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="comercianteIndex">Índice:</label>
+                <input type="number" id="comercianteIndex" class="form-control" placeholder="Introduce el índice"
+                    required>
+            </div>
+            <div class="form-group">
+                <label for="comercianteDate">Fecha:</label>
+                <input type="date" id="comercianteDate" class="form-control" required>
+            </div>
+            <button id="comercianteAddBtn" class="btn btn-primary">Registrar a Blockchain</button>
+            <button id="comercianteSoldBtn" class="btn btn-danger">Marcar como Vendido</button>
+        </div>
+
+        <!-- Formulario para Cliente -->
+        <div id="clienteForm" class="form-container shadow-lg p-4 rounded bg-white">
+            <h3 class="text-center">Ver Información del Cliente</h3>
+            <div class="form-group">
+                <label for="clienteIndex">Índice:</label>
+                <input type="number" id="clienteIndex" class="form-control" placeholder="Introduce el índice" required>
+            </div>
+            <button id="clienteSearchBtn" class="btn btn-warning">Buscar</button>
+            <div id="clienteInfo" class="mt-3"></div> <!-- Contenedor para mostrar información -->
+            <button id="clienteSoldBtn" class="btn btn-danger" style="display:none;">Marcar como Vendido</button>
+            <!-- Botón oculto por defecto -->
+        </div>
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Función para mostrar el formulario correspondiente
+        function showForm(formId) {
+            // Ocultar todos los formularios
+            document.querySelectorAll('.form-container').forEach(form => form.style.display = 'none');
+            // Mostrar el formulario seleccionado
+            document.getElementById(formId).style.display = 'block';
+        }
+
+        // Manejar el registro de Licorera
+        document.getElementById('licoreraAddBtn').addEventListener('click', function () {
+            const name = document.getElementById('licoreraName').value;
+            const index = document.getElementById('licoreraIndex').value;
+            const date = document.getElementById('licoreraDate').value;
+
+            if (!name || !index || !date) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            fetch('/addBlockLicorera', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    index: parseInt(index),
+                    licoreraInfo: {
+                        name: name,
+                        timestamp: date
+                    }
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("Licorera agregada a la Blockchain");
+                    // Limpiar campos
+                    document.getElementById('licoreraName').value = '';
+                    document.getElementById('licoreraIndex').value = '';
+                    document.getElementById('licoreraDate').value = '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        });
+
+        // Manejar el registro de Distribuidor
+        document.getElementById('distribuidorAddBtn').addEventListener('click', function () {
+            const name = document.getElementById('distribuidorName').value;
+            const index = document.getElementById('distribuidorIndex').value;
+            const date = document.getElementById('distribuidorDate').value;
+
+            if (!name || !index || !date) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            fetch('/addBlockDistribuidor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    index: parseInt(index),
+                    distribuidorInfo: {
+                        name: name,
+                        timestamp: date
+                    }
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("Distribuidor agregado a la Blockchain");
+                    // Limpiar campos
+                    document.getElementById('distribuidorName').value = '';
+                    document.getElementById('distribuidorIndex').value = '';
+                    document.getElementById('distribuidorDate').value = '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        });
+
+        // Manejar el registro de Comerciante
+        document.getElementById('comercianteAddBtn').addEventListener('click', function () {
+            const name = document.getElementById('comercianteName').value;
+            const index = document.getElementById('comercianteIndex').value;
+            const date = document.getElementById('comercianteDate').value;
+
+            if (!name || !index || !date) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            fetch('/addBlockComerciante', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    index: parseInt(index),
+                    comercianteInfo: {
+                        name: name,
+                        timestamp: date
+                    }
+                }),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("Comerciante agregado a la Blockchain");
+                    // Limpiar campos
+                    document.getElementById('comercianteName').value = '';
+                    document.getElementById('comercianteIndex').value = '';
+                    document.getElementById('comercianteDate').value = '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        });
+
+        // Marcar como vendido desde el Comerciante
+        document.getElementById('comercianteSoldBtn').addEventListener('click', function () {
+            const index = document.getElementById('comercianteIndex').value;
+
+            if (!index) {
+                alert('Por favor, introduce el índice.');
+                return;
+            }
+
+            fetch(`/markAsSold/${index}`, { method: 'PUT' })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("Botella marcada como vendida");
+                    // Limpiar campos
+                    document.getElementById('comercianteIndex').value = '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        });
+
+        // Manejar búsqueda de Cliente
+        // Manejar búsqueda de Cliente
+        document.getElementById('clienteSearchBtn').addEventListener('click', function () {
+            const index = document.getElementById('clienteIndex').value;
+
+            if (!index) {
+                alert('Por favor, introduce el índice.');
+                return;
+            }
+
+            fetch(`/getBlocksByIndex/${index}`)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const blocks = data.blocks;
+
+                    if (!blocks || blocks.length === 0) {
+                        document.getElementById('clienteInfo').innerHTML = 'No se encontró ningún bloque para este índice.';
+                        document.getElementById('clienteSoldBtn').style.display = 'none'; // Ocultar botón de vendido
+                        return;
+                    }
+
+                    // Ordenar los bloques según el orden de roles
+                    blocks.sort((a, b) => {
+                        const roles = ['Licorera', 'Distribuidor', 'Comerciante'];
+                        return roles.indexOf(a.role) - roles.indexOf(b.role);
+                    });
+
+                    const registros = blocks.map(block => {
+                        return {
+                            rol: block.role,
+                            nombre: block.data.name ? block.data.name : 'No disponible',
+                            indice: block.index,
+                            fechaRegistro: block.timestamp,
+                            estado: block.data.sold ? 'Vendida' : 'Disponible'
+                        };
+                    });
+
+                    let infoHtml = '';
+                    let isSold = false;
+                    registros.forEach((registro, idx) => {
+                        infoHtml += `
+                    <h5>Registro ${idx + 1} - ${registro.rol}</h5>
+                    <p><strong>Nombre:</strong> ${registro.nombre}</p>
+                    <p><strong>Índice:</strong> ${registro.indice}</p>
+                    <p><strong>Fecha de registro:</strong> ${registro.fechaRegistro}</p>
+                    <p><strong>Estado:</strong> ${registro.estado}</p>
+                    <hr>
+                `;
+                        if (registro.estado === 'Vendida') {
+                            isSold = true;
+                        }
+                    });
+
+                    document.getElementById('clienteInfo').innerHTML = infoHtml;
+
+                    // Mostrar botón de "Marcar como vendido" si no está vendido aún
+                    if (!isSold) {
+                        document.getElementById('clienteSoldBtn').style.display = 'block';
+                    } else {
+                        document.getElementById('clienteSoldBtn').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        });
+
+        // Manejar la opción de "Marcar como vendido" desde Cliente
+        document.getElementById('clienteSoldBtn').addEventListener('click', function () {
+            const index = document.getElementById('clienteIndex').value;
+
+            if (!index) {
+                alert('Por favor, introduce el índice.');
+                return;
+            }
+
+            fetch(`/markAsSold/${index}`, { method: 'PUT' })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.error); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert("Índice marcado como vendido.");
+                    // Actualizar la vista
+                    document.getElementById('clienteSearchBtn').click();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                });
+        });
+
+    </script>
+</body>
+
+</html>
